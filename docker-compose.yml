@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+    backend:
+        build:
+            context: ./backend
+        depends_on:
+            - mongo
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: mongo_username
+            MONGO_INITDB_ROOT_PASSWORD: mongo_password
+            JWT_TOKEN_SECRET: "CDg7QAHA6KkmNsLpUTa9LyeHgLgENX3FLNrqTRBQDUbQuZgNzVYdqpDSUhKMuv58Y7aQ7m"
+        hostname: backend
+        
+        image: 2021-desix-proyecto-final
+        ports:
+            - "4000:4000"
+        volumes:
+            - "./backend/app.js:/code/backend/app.js"
+            - "./backend/controllers:/code/backend/controllers"
+            - "./backend/models:/code/backend/models"
+            - "./backend/models.js:/code/backend/models.js"
+            - "./backend/utils.js:/code/backend/utils.js"
+            - "./backend/package.json:/code/backend/package.json"
+            - "./backend/package-lock.json:/code/backend/package-lock.json"
+    mongo:
+        image: mongo:latest
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: mongo_username
+            MONGO_INITDB_ROOT_PASSWORD: mongo_password
+        hostname: mongo
+        volumes:
+            - "./db:/data/db"
+        ports:
+            - "27017:27017"
