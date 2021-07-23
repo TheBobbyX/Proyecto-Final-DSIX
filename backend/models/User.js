@@ -34,7 +34,7 @@ UserSchema.methods.validatePassword = async function validationPassword(password
 };
 
 UserSchema.methods.getAccessToken = async function getAccessToken() {
-    return jwt.sign({ name: this.name, email: this.email }, process.env.JWT_TOKEN_SECRET, { expiresIn: '1800s' });
+    return jwt.sign({ name: this.name, email: this.email }, process.env.JWT_TOKEN_SECRET, { expiresIn: 60*60*1/*Una hora*/});
 }
 
 const UserModel = mongoose.model('User', UserSchema);

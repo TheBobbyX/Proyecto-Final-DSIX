@@ -11,18 +11,23 @@ services:
             MONGO_INITDB_ROOT_PASSWORD: mongo_password
             JWT_TOKEN_SECRET: "CDg7QAHA6KkmNsLpUTa9LyeHgLgENX3FLNrqTRBQDUbQuZgNzVYdqpDSUhKMuv58Y7aQ7m"
         hostname: backend
-        
-        image: 2021-desix-proyecto-final
+        image: universidad:desix-proyecto-final-backend
         ports:
             - "4000:4000"
         volumes:
-            - "./backend/app.js:/code/backend/app.js"
-            - "./backend/controllers:/code/backend/controllers"
-            - "./backend/models:/code/backend/models"
-            - "./backend/models.js:/code/backend/models.js"
-            - "./backend/utils.js:/code/backend/utils.js"
-            - "./backend/package.json:/code/backend/package.json"
-            - "./backend/package-lock.json:/code/backend/package-lock.json"
+            - "./backend/:/code/backend/"
+            
+    frontend:
+        build:
+            context: ./frontend
+        depends_on:
+            - backend
+        hostname: frontend
+        image: universidad:desix-proyecto-final-frontend
+        ports:
+            - "3000:3000"
+        volumes:
+            - "./frontend/:/code/frontend/"
     mongo:
         image: mongo:latest
         environment:

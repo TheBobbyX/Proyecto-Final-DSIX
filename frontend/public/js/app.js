@@ -1,116 +1,59 @@
 (() => {
     const App = {
-
         htmlElements: {
             loginForm: document.getElementById('form-login'),
-            //mainTaskList: document.querySelector('.main-task-list'),
+            loginDiv: document.querySelector('.login-container'),
+            itemsDiv: document.querySelector('.items-container'),
+            itemsList:document.querySelector('.items-list')
+            
         },
         init: () => {
-            //console.log("hola");
-           // App.initializeData.tasks();
             App.bindEvents();
-            
         },
         bindEvents: () => {
-            App.htmlElements.loginForm.addEventListener('submit', App.events.onLogin);
-            //App.htmlElements.mainTaskList.addEventListener('click', App.events.tasksTableDeleteUpdate);
-            
+            App.htmlElements.loginForm.addEventListener('submit', App.events.onLogin);           
         },
         initializeData: {
-            tasks: async () => {
-                const { count, data } = await App.utils.fetch('http://localhost:4000/api/v1/tasks/',
+            items: async () => {
+                const { count, data } = await App.utils.fetch('http://localhost:4000/api/v1/items/',
                 { 
                     method: 'GET'
                 });
-                data.forEach(task => {
-                    App.utils.addTaskToTable(task);
+                data.forEach(item => {
+                    App.utils.addItems(item);
                 });
             }
         },
         events: {
             onLogin: async (event) => {
                 event.preventDefault();
-                const { user: vuser, password: vpassword} = event.target.elements;
-                const userValue = vuser.value;
-                const passwordValue = vpassword.value;
-                if(userValue!=""){
-                    await App.utils.fetch('http://localhost:4000/api/v1/users/login/',
+                const { email, password } = event.target.elements;
+                const emailValue = email.value;
+                const passwordValue = password.value;
+                if(emailValue!=""){
+                    const { auth, token} = await App.utils.fetch('http://localhost:4000/api/v1/users/login/',
                     { 
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            "email": userValue,
+                            "email": emailValue,
                             "password": passwordValue
                         }),
                         redirect: 'follow'
                     });
+                    if(auth){
+                        window.sessionStorage.setItem("token",token);
+                        App.htmlElements.loginDiv.style.display = "none";
+                        App.htmlElements.itemsDiv.style.display = "block";
+                        App.initializeData.items();
+                    }else{
+                        alert("Error, Email o Contraseña equivocados")
+                    }
                 }
             },
-           /* tasksTableDeleteUpdate: async (event) =>{
-                event.preventDefault();
-                if(event.target.id == "Delete"){
-                    const id = event.target.parentNode.id;
-                    await App.utils.fetch('http://localhost:4000/api/v1/tasks/'+id,
-                    {
-                        method: 'DELETE'
-                    });
-                    App.htmlElements.mainTaskList.innerHTML="";
-                    App.initializeData.tasks();
-                }else if(event.target.id == "Check"){
-                    const id = event.target.parentNode.id;
-                    const { data } = await App.utils.fetch('http://localhost:4000/api/v1/tasks/'+id,
-                    {
-                        method: 'GET'
-                    });
-                    if(data.completed){
-                        await App.utils.fetch('http://localhost:4000/api/v1/tasks/'+id,
-                        {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                "name": data.name,
-                                "type": data.type,
-                                "completed": false
-                            }),
-                            redirect: 'follow'
-                        });
-                    }else if(!data.completed){
-                        await App.utils.fetch('http://localhost:4000/api/v1/tasks/'+id,
-                        {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                "name": data.name,
-                                "type": data.type,
-                                "completed": true
-                            }),
-                            redirect: 'follow'
-                        });
-                    }
-                    App.htmlElements.mainTaskList.innerHTML="";
-                    App.initializeData.tasks();
-                }else if(event.target.id == "Update"){
-                    const id = event.target.parentNode.id;
-                    App.update = true;
-                    App.idTask = id;
-                    const { data } = await App.utils.fetch('http://localhost:4000/api/v1/tasks/'+id,
-                    {
-                        method: 'GET'
-                    });
-                    App.htmlElements.taskForm.elements.task.value = data.name;
-                    App.htmlElements.taskForm.elements.tasktype.value = data.type;
-                    App.utils.disabledElementsList(true);                    
-                }
-            },*/
-        
         },
-        
         utils: {
             fetch: async (url, options) => {
                 const requestOptions = options;
@@ -118,25 +61,27 @@
                 return response.json();
                  
             },
-            addTaskToTable: ({_id, name, type, completed}) => {
-                if(completed){
-                    App.htmlElements.mainTaskList.innerHTML += `<div id=${_id}><label name='type' for="">${type}</label><br><button id='Check' style="background-color:black;"></button><label for="" style="text-decoration:line-through;">${name}</label><button id='Update' disabled>Editar</button><button id='Delete'>Eliminar</button></div>`;
+            addItems: ({_id, name, description,price}) => {
+                App.htmlElements.itemsList.innerHTML += `<div id=${_id}><img src="/static/img/${_id}.jpg" alt="${name}" width="50" height="60"><label for="">${description}</label><label for="">Precio $${price}</label><button id='addCart'> Agregar al Carrito</button></div>`;
+                /*if(completed){
+                    App.htmlElements.mainTaskList.innerHTML += `<div value=${++App.count}></div>`;
                 }else{
-                    App.htmlElements.mainTaskList.innerHTML += `<div id=${_id}><label name='type' for="">${type}</label><br><button id='Check' style="background-color:grey;"></button><label for="" style="text-decoration:none;">${name}</label><button id='Update'>Editar</button><button id='Delete'>Eliminar</button></div>`;
-                } 
+                    App.htmlElements.mainTaskList.innerHTML += `<div value=${++App.count}><label name='type' for="">${type}</label><br><button id='Check' style="background-color:grey;"></button><label for="" style="text-decoration:none;">${name}</label><button value='Update'>Editar</button><button value='Delete'>Eliminar</button></div>`;
+                } */
             },
-            disabledElementsList:(select) =>{
-                var nodes = App.htmlElements.mainTaskList.getElementsByTagName('*');
-                if(select){
-                    for(var i = 0; i < nodes.length; i++){
-                         nodes[i].disabled = true;
-                    }
-                }else if(!select){
-                    for(var i = 0; i < nodes.length; i++){
-                        nodes[i].disabled = false;
-                   }
-                }     
-            }
+           /* redirection:(page) => {
+                switch (page) {
+                    case 'login':
+                        window.location = "/"
+                        break;
+                    case 'items':
+                        window.location = "/items"
+                        break;
+                    case 'cart':
+                        window.location = "/cart"
+                        break;
+                }
+            }*/
         }
     };
     App.init();

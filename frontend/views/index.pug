@@ -1,0 +1,31 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="/static/css/style.css")
+        title Proyecto Final
+    body 
+        .main-container
+            .login-container
+                h1 UTP Guitar Shop
+                form#form-login(action="")
+                    label(for="email") Introduzca su Email
+                    br
+                    input(type="text", name="email")
+                    br
+                    label(for="password") Introduzca su Contraseña
+                    br
+                    input(type="password", name="password")
+                    br
+                    button(type="submit") Enviar
+            .items-container
+                h1 UTP Guitar Shop
+                .items-list
+                button(type="submit") Ir al Carrito
+            .cart-list
+                
+                    
+    script(src="/static/js/app.js") 
+        

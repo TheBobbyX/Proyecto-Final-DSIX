@@ -48,9 +48,9 @@ module.exports.controllers = {
             if (!isValid) { throw new Error('Either email or password does not exists.') }
 
             const token = await user.getAccessToken();
-            return res.json({ token });
+            return res.json({ auth: true , token: token });
         } catch (error) {
-            res.json({ message: error.message });
+            res.json({ auth: false ,message: error.message });
         }
     }
 };

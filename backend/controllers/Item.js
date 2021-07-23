@@ -50,7 +50,11 @@ module.exports.controllers = {
             if(!errors.isEmpty()){ return res.json(errors);}
             const id = req.params.id;
 
-            // Save in database
+            // Delete in database
+           /* const item = await ItemModel.deleteOne({ _id: id });
+            res.json({message: `delete ${id}` })*/
+
+            // Disable in database
             const item = await ItemModel.findOne({ _id: id });
             item.active = false;
             await item.validate();
