@@ -1,9 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;800&display=swap');
-h1 {
+.login-container h1 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     padding-left: 5.2rem;
     padding-top: 1rem;
+}
+.items-container h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    padding-left: 3rem;
+    padding-top: 1rem;    
+}
+.cart-container h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    padding-left: 3rem;
+    padding-top: 1rem;    
 }
 .main-container {
     display: flex;
@@ -18,26 +30,40 @@ h1 {
     height: 50vh;
     display: block;
 }
+
 .items-container {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    width: 80vw;
-    height: 60vh;
+    width: 90vw;
+    height: 70vh;
     display: none;    
+}
+
+
+.cart-container {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    width: 41vw;
+    height: 50vh;
+    display: none;
 }
 .items-list {
     margin-left: 3rem;
     margin-right: 2.5rem;
-    margin-top: 1rem;
+    margin-top: 0.1rem;
     font-family: 'Montserrat', sans-serif;
     overflow-y: auto;
-    width: 73vw;
-    height: 30vh;
+    width: 83vw;
+    height: 45vh;
     display: inline-block;
 }
 
 .items-list div{
     text-align: justify;
-    margin-bottom: 0.7rem;
+    margin-bottom: 2rem;
+}
+
+.items-list div img{
+    width: 7rem;
+    height: 8rem;
 }
 
 .items-list div label {
@@ -45,7 +71,7 @@ h1 {
     margin-right: 0.5rem;
 }
 
-form input {
+#form-login input {
     margin-left: 6rem;
     height: 2rem;
     width: 13.5rem;
@@ -53,8 +79,12 @@ form input {
     font-weight: 400;
     padding-left: 1rem;
     border-radius: 1rem;
+    cursor: text;
 }
-form label {
+#form-login input:focus {
+    outline: none;
+}
+#form-login label {
     margin-left: 6rem;
     height: 2rem;
     width: 13.5rem;
@@ -62,18 +92,64 @@ form label {
     font-weight: 400;
     padding-left: 1rem;
 }
-form button {
+#form-login button {
     margin-left: 6rem;
     margin-top: 0.5rem;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
     font-size: large;
     height: 2.35rem;
     width: 14.9rem;
     border-radius: 1rem;
+    cursor: pointer;
 }
+
 #addCart{
     font-family: 'Montserrat', sans-serif;
+    border-radius: 1rem;
     cursor: pointer;
     float: right;
+    height: 2.35rem;
+    width: 10.9rem;
+    font-size: medium;
+}
+#goToCart{
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    font-size: large;
+    height: 2.35rem;
+    width: 14.9rem;
+    border-radius: 1rem;
+    margin-left: 31rem;
+    margin-right: 31rem;
+    margin-top: 0.5rem;
+}
+.cart-list{
+    margin-left: 3rem;
+    margin-right: 2.5rem;
+    margin-top: 0.1rem;
+    font-family: 'Montserrat', sans-serif;
+    overflow-y: auto;
+    width: 34vw;
+    height: 15vh;
+    display: inline-block;
+}
+.cart-list div{
+    text-align: justify;
+    margin-bottom: 0.5rem;
+}
+.cart-total{
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 1.2rem;
+    margin-left: 3rem;
+}
+#goToPaypal{
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    font-size: large;
+    height: 2.35rem;
+    width: 14.9rem;
+    border-radius: 1rem;
+    margin-left: 10rem;
+    margin-right: 10rem;
+    margin-top: 0.9rem;
 }

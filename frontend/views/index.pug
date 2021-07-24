@@ -21,11 +21,16 @@ html(lang="en")
                     br
                     button(type="submit") Enviar
             .items-container
-                h1 UTP Guitar Shop
+                h1 UTP Guitar Shop Items 
                 .items-list
-                button(type="submit") Ir al Carrito
-            .cart-list
-                
+                button#goToCart Ir al Carrito
+            .cart-container
+                h1 UTP Guitar Shop Cart
+                .cart-list
+                .cart-total
+                    label(for="#Total") Total:   
+                    label#Total(for="") 
+                button#goToPaypal Pagar            
                     
     script(src="/static/js/app.js") 
         

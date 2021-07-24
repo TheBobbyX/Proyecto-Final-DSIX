@@ -1,17 +1,22 @@
 (() => {
     const App = {
+        total:0,
         htmlElements: {
             loginForm: document.getElementById('form-login'),
+            cartTotal: document.getElementById('Total'),
             loginDiv: document.querySelector('.login-container'),
             itemsDiv: document.querySelector('.items-container'),
-            itemsList:document.querySelector('.items-list')
-            
+            cartDiv: document.querySelector('.cart-container'),
+            itemsList:document.querySelector('.items-list'),
+            cartList:document.querySelector('.cart-list'),
         },
         init: () => {
             App.bindEvents();
         },
         bindEvents: () => {
-            App.htmlElements.loginForm.addEventListener('submit', App.events.onLogin);           
+            App.htmlElements.loginForm.addEventListener('submit', App.events.onLogin);
+            App.htmlElements.itemsList.addEventListener('click', App.events.addToCart);  
+            App.htmlElements.itemsDiv.addEventListener('click', App.events.showCart);         
         },
         initializeData: {
             items: async () => {
@@ -20,7 +25,7 @@
                     method: 'GET'
                 });
                 data.forEach(item => {
-                    App.utils.addItems(item);
+                    App.utils.loadItems(item);
                 });
             }
         },
@@ -46,13 +51,47 @@
                     if(auth){
                         window.sessionStorage.setItem("token",token);
                         App.htmlElements.loginDiv.style.display = "none";
-                        App.htmlElements.itemsDiv.style.display = "block";
                         App.initializeData.items();
+                        App.htmlElements.itemsDiv.style.display = "block";
                     }else{
                         alert("Error, Email o Contraseña equivocados")
                     }
                 }
             },
+            addToCart: async (event) =>{
+                event.preventDefault();
+                if(event.target.id == "addCart"){
+                    const id = event.target.parentNode.id;
+                    console.log(id);
+                    await App.utils.fetch('http://localhost:4000/api/v1/cart/items/add/',
+                    { 
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            "id": id
+                        }),
+                        redirect: 'follow'
+                    });
+                    alert("Item añadido al Carrito")
+                }
+            },
+            showCart: async (event) =>{
+                event.preventDefault();
+                if(event.target.id == "goToCart"){
+                    App.htmlElements.itemsDiv.style.display = "none";
+                    const { count, data } = await App.utils.fetch('http://localhost:4000/api/v1/cart/items/',
+                    { 
+                        method: 'GET'
+                    });
+                    //App.total=0;
+                    data.forEach(item => {
+                        App.utils.loadItemsCart(item);
+                    });
+                    App.htmlElements.cartDiv.style.display = "block";                    
+                }
+            }
         },
         utils: {
             fetch: async (url, options) => {
@@ -61,27 +100,19 @@
                 return response.json();
                  
             },
-            addItems: ({_id, name, description,price}) => {
-                App.htmlElements.itemsList.innerHTML += `<div id=${_id}><img src="/static/img/${_id}.jpg" alt="${name}" width="50" height="60"><label for="">${description}</label><label for="">Precio $${price}</label><button id='addCart'> Agregar al Carrito</button></div>`;
-                /*if(completed){
-                    App.htmlElements.mainTaskList.innerHTML += `<div value=${++App.count}></div>`;
-                }else{
-                    App.htmlElements.mainTaskList.innerHTML += `<div value=${++App.count}><label name='type' for="">${type}</label><br><button id='Check' style="background-color:grey;"></button><label for="" style="text-decoration:none;">${name}</label><button value='Update'>Editar</button><button value='Delete'>Eliminar</button></div>`;
-                } */
+            loadItems: ({_id, name, description, price}) => {
+                App.htmlElements.itemsList.innerHTML += `<div id=${_id}><label for="">${name}</label><br><img src="/static/img/${_id}.jpg" alt="${name}"><br><label for="">${description}</label><br><label for="">Precio $${price}</label><button id='addCart'> Agregar al Carrito</button></div>`;
             },
-           /* redirection:(page) => {
-                switch (page) {
-                    case 'login':
-                        window.location = "/"
-                        break;
-                    case 'items':
-                        window.location = "/items"
-                        break;
-                    case 'cart':
-                        window.location = "/cart"
-                        break;
-                }
-            }*/
+            loadItemsCart: async ({item}) => {
+                const { data } = await App.utils.fetch('http://localhost:4000/api/v1/item/'+item,
+                { 
+                    method: 'GET'
+                });
+                App.htmlElements.cartTotal.innerHTML = Number(App.htmlElements.cartTotal.innerHTML)+data.price;
+                App.htmlElements.cartList.innerHTML += `<div id=${data._id}><label for="">${data.name}</label>&nbsp;&nbsp;<label name=total for="">Precio $${data.price}</label></div>`;
+                
+            },
+            
         }
     };
     App.init();

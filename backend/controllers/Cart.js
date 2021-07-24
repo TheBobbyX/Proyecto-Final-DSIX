@@ -10,8 +10,8 @@ module.exports.validators = {
         body('id', 'Id is required').exists(),
     ],
     deleteItemFromCart: [
-        body('id', 'Id is required').exists(),
-    ],
+        param('id', 'Id is required').exists(),
+    ]
 };
 
 module.exports.controllers = {
@@ -49,15 +49,16 @@ module.exports.controllers = {
             // Evaluate validations
             const errors = validationResult(req);
             if(!errors.isEmpty()){ return res.json(errors);}
-            const { id } = req.body();
+            const  id  = req.params.id;
 
             // Save in database
-            const item = await ItemModel.findById(id);
-            await CartModel.deleteOne({ item });
+            
+            await CartModel.deleteOne({ _id: id });
             const cart = await CartModel.find(); 
             res.json({ data: cart, model: 'cart', count: cart.length });
         } catch (error) {
             res.json({message: error.message});
         }
     },
+    
 };
