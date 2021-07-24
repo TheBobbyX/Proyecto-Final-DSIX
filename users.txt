@@ -1,0 +1,12 @@
+{
+    "name": "Angel Lam",
+    "email": "angel.lam@utp.ac.pa",
+    "password": "angel",
+    "age":"22"
+}
+{
+    "name": "Roberto Brown",
+    "email": "roberto.brown1@utp.ac.pa",
+    "password": "roberto",
+    "age":"26"
+}

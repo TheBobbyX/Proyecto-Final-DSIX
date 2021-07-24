@@ -100,8 +100,8 @@
                 return response.json();
                  
             },
-            loadItems: ({_id, name, description, price}) => {
-                App.htmlElements.itemsList.innerHTML += `<div id=${_id}><label for="">${name}</label><br><img src="/static/img/${_id}.jpg" alt="${name}"><br><label for="">${description}</label><br><label for="">Precio $${price}</label><button id='addCart'> Agregar al Carrito</button></div>`;
+            loadItems: ({_id, name, description, price, id_image}) => {
+                App.htmlElements.itemsList.innerHTML += `<div id=${_id}><label for="">${name}</label><br><img src="/static/img/${id_image}.jpg" alt="${name}"><br><label for="">${description}</label><br><label for="">Precio $${price}</label><button id='addCart'> Agregar al Carrito</button></div>`;
             },
             loadItemsCart: async ({item}) => {
                 const { data } = await App.utils.fetch('http://localhost:4000/api/v1/item/'+item,

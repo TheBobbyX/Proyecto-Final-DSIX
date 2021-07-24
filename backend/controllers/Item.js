@@ -10,6 +10,7 @@ module.exports.validators = {
     ],
     createItem: [
         body('name', 'Name is required').exists(),
+        body('id_image', 'Name is required').exists(),
         body('price', 'Price is required').exists(),
         body('description', 'Description is required').exists(),
     ],
@@ -59,11 +60,12 @@ module.exports.controllers = {
             const id = req.params.id;
             
             // Update in database
-            const { name, description, price  } = req.body;
+            const { name, description, price, id_image  } = req.body;
             const item = await ItemModel.findOne({ _id: id });  // TODO: Review why does not apply the filter
             item.name = name;
             item.description = description;
-            item.price = price
+            item.price = price;
+            item.id_image = id_image
             await item.save();
             res.json({ data: item, model: 'item' });
         } catch (error) {
@@ -75,10 +77,10 @@ module.exports.controllers = {
             // Evaluate validations
             const errors = validationResult(req);
             if(!errors.isEmpty()){ return res.json(errors);}
-            const { name, description, price } = req.body;
+            const { name, description, price, id_image } = req.body;
 
             // Save in database
-            const item = await ItemModel.create({ name, description, price });
+            const item = await ItemModel.create({ name, description, price, id_image });
             res.json({ data: item, model: 'item' });
         } catch (error) {
             res.json({message: error.message});

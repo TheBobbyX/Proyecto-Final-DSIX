@@ -1,0 +1,66 @@
+{
+    "name": "Guitarra Eléctrica Classic Vibe 50S",
+    "description": "Marca: Squier. Estilo: Stratocaster. Color: Rojo. Configuración pastillas: S/S/S.",
+    "id_image": "60fa4363fc75d20025bd3a4e",
+    "price": 519.99
+}
+{
+    "name": "Guitarra Eléctrica Bullet HT HSS",
+    "description": "Marca: Squier. Estilo: Stratocaster. Color: Rosa. Configuración pastillas: H/S/S.",
+    "id_image": "60fa4375fc75d20025bd3a50",
+    "price": 249.99
+}
+{
+    "name": "Guitarra Eléctrica Bullet",
+    "description": "Marca: Squier. Estilo: Telecaster. Color: Negro. Configuración pastillas: S/S.",
+    "id_image": "60fa4381fc75d20025bd3a52",
+    "price": 249.99
+}
+{
+    "name": "Guitarra Eléctrica Affinity Series",
+    "description": "Marca: Squier. Estilo: Stratocaster. Color: Resplandor Marrón. Configuración pastillas: S/S/S.",
+    "id_image": "60fa438dfc75d20025bd3a54",
+    "price": 319.99
+}
+{
+    "name": "Guitarra Eléctrica Affinity Series",
+    "description": "Marca: Squier. Estilo: Telecaster. Color: Rubio Caramelo. Configuración pastillas: S/S.",
+    "id_image": "60fa439efc75d20025bd3a56",
+    "price": 319.99
+}
+{
+    "name": "Guitarra Eléctrica American Performer",
+    "description": "Marca: Fender. Estilo: Telecaster. Color: Blanco Vintage. Configuración pastillas: S/S.",
+    "id_image": "60fa4091b67148002640ed6b",
+    "price": 1.400
+}
+{
+    "name": "Guitarra Eléctrica Jared James Nichols",
+    "description": "Marca: Ephiphone. Estilo: Les Paul. Color: Negro. Configuración pastillas: S.",
+    "id_image": "60fa40b5b67148002640ed6d",
+    "price": 899.99
+}
+{
+    "name": "Guitarra Eléctrica Plus Top Pro",
+    "description": "Marca: Ephiphone. Estilo: Les Paul. Color: Negro. Configuración pastillas: H/H.",
+    "id_image": "60fa40c0b67148002640ed6f",
+    "price": 999.99
+}
+{
+    "name": "Guitarra Eléctrica Plus Top Pro",
+    "description": "Marca: Ephiphone. Estilo: Les Paul. Color: Bourbon. Configuración pastillas: H/H.",
+    "id_image": "60fa40d1b67148002640ed71",
+    "price": 779.99
+}
+{
+    "name": "Guitarra Eléctrica SG Special",
+    "description": "Marca: Ephiphone. Estilo: SG. Color: Negro. Configuración pastillas: H/H.",
+    "id_image": "60fa40dcb67148002640ed73",
+    "price": 299.99
+}
+{
+    "name": "Guitarra Eléctrica SG Special",
+    "description": "Marca: Ephiphone. Estilo: SG. Color: Cereza. Configuración pastillas: H/H.",
+    "id_image": "60fa40e8b67148002640ed75",
+    "price": 299.99
+}
