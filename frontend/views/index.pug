@@ -9,28 +9,55 @@ html(lang="en")
     body 
         .main-container
             .login-container
-                h1 UTP Guitar Shop
-                form#form-login(action="")
-                    label(for="email") Introduzca su Email
-                    br
-                    input(type="text", name="email")
-                    br
-                    label(for="password") Introduzca su Contraseña
-                    br
-                    input(type="password", name="password")
-                    br
-                    button(type="submit") Enviar
+                .login-left-side
+                    .login-left-side-container 
+                        .title-container
+                            h1 PRESENTAMOS 
+                        .subtitle-container 
+                            p Nuestro Semestral 
+                            p Desarrollo de Software XI
+                        .group-container 
+                            p Por: 
+                            p Brown, Roberto 
+                            p Lam, Angel
+                .login-right-side
+                    .login-right-side-container 
+                        .title-login
+                            h1 LOGIN          
+                        form.form-container#form-login(action="")
+                            .input-container
+                                label(for="email") Correo
+                                br
+                                input(type="text", name="email")
+                                br
+                            .input-container
+                                label(for="password") Contraseña
+                                br
+                                input(type="password", name="password")
+                                br
+                            .button-container 
+                                button(type="submit") Ingresar
             .items-container
-                h1 UTP Guitar Shop Items 
+                header 
+                    img(src="/static/img/logout.svg", alt="logout")#logout.logout
+                    h1 NUESTROS PRODUCTOS
+                    img(src="/static/img/cart.svg", alt="cart")#goToCart
                 .items-list
-                button#goToCart Ir al Carrito
             .cart-container
-                h1 UTP Guitar Shop Cart
-                .cart-list
-                .cart-total
-                    label(for="#Total") Total:   
-                    label#Total(for="") 
-                button#goToPaypal Pagar            
-                    
+                header
+                    img(src="/static/img/back.svg", alt="back")#back 
+                    h1 CARRITO
+                    .empty-div
+                .cart-section
+                    .cart-list
+                    .cart-total#cartTotalSection
+                        .cart-total-container 
+                            .checkout 
+                                h1#cartTotal Total: $0
+                                .product-actions#productActions 
+                                    button#goToPaypal(disabled=true) Comprar
+                            .buying-image           
+                                img(src="/static/img/buying.svg") 
+
     script(src="/static/js/app.js") 
         
