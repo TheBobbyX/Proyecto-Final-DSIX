@@ -54,17 +54,10 @@ app.delete(
 );
 
 // Cart API
-app.get("/api/v1/cart/items/", CartValidators.getCart, CartControllers.getCart);
-app.post(
-  "/api/v1/cart/items/add/",
-  CartValidators.addItemToCart,
-  CartControllers.addItemToCart
-);
-app.delete(
-  "/api/v1/cart/items/remove/:id",
-  CartValidators.deleteItemFromCart,
-  CartControllers.deleteItemFromCart
-);
+app.get('/api/v1/cart/items/', CartValidators.getCart, CartControllers.getCart);
+app.post('/api/v1/cart/items/add/', CartValidators.addItemToCart, CartControllers.addItemToCart);
+app.delete('/api/v1/cart/items/remove/:id', CartValidators.deleteItemFromCart, CartControllers.deleteItemFromCart);
+app.delete('/api/v1/cart/items/removeall/', CartValidators.clearCart, CartControllers.clearCart);
 
 connectDb().then(() => {
   app.listen(port, () => {

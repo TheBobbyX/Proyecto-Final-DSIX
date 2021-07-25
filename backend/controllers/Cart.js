@@ -11,7 +11,8 @@ module.exports.validators = {
     ],
     deleteItemFromCart: [
         param('id', 'Id is required').exists(),
-    ]
+    ],
+    clearCart: []
 };
 
 module.exports.controllers = {
@@ -51,9 +52,23 @@ module.exports.controllers = {
             if(!errors.isEmpty()){ return res.json(errors);}
             const  id  = req.params.id;
 
-            // Save in database
+            // delete one in database
             
             await CartModel.deleteOne({ _id: id });
+            const cart = await CartModel.find(); 
+            res.json({ data: cart, model: 'cart', count: cart.length });
+        } catch (error) {
+            res.json({message: error.message});
+        }
+    },
+    clearCart: async (req, res, next) => {
+        try {
+            // Evaluate validations
+            const errors = validationResult(req);
+            if(!errors.isEmpty()){ return res.json(errors);}
+            
+            // Delete all items in Cart in database
+            await CartModel.deleteMany();
             const cart = await CartModel.find(); 
             res.json({ data: cart, model: 'cart', count: cart.length });
         } catch (error) {
