@@ -55,9 +55,10 @@ html(lang="en")
                             .checkout 
                                 h1#cartTotal Total: $0
                                 .product-actions#productActions 
-                                    button#goToPaypal(disabled=true) Comprar
+                                    #paypal-button-container
                             .buying-image           
                                 img(src="/static/img/buying.svg") 
 
     script(src="/static/js/app.js") 
+    script(src="https://www.paypal.com/sdk/js?client-id=Abcm2u_F8ERDOtTaLXv3Jircn2AN77iqyHUTBR7qPdnQVZSZE_LFMDRvl-bZk9FHr5AqoAJwuRAuj_vH")
         
