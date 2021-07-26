@@ -6,7 +6,7 @@
       cartTotal: document.getElementById("cartTotal"),
       logoutButton: document.getElementById("logout"),
       backButton: document.getElementById("back"),
-      goToPaypal: document.getElementById("goToPaypal"),
+      paypalButton: document.getElementById("paypal-button-container"),
       loginDiv: document.querySelector(".login-container"),
       itemsDiv: document.querySelector(".items-container"),
       cartDiv: document.querySelector(".cart-container"),
@@ -28,9 +28,9 @@
       );
       App.htmlElements.itemsDiv.addEventListener("click", App.events.showCart);
       App.htmlElements.backButton.addEventListener("click", App.events.back);
-      App.htmlElements.goToPaypal.addEventListener(
+      App.htmlElements.paypalButton.addEventListener(
         "click",
-        App.events.checkout
+        App.events.paypal
       );
     },
     initializeData: {
@@ -70,6 +70,7 @@
           if (auth) {
             window.sessionStorage.setItem("token", token);
             App.initializeData.items();
+            App.utils.removeCart();
             App.htmlElements.loginDiv.style.display = "none";
             App.htmlElements.itemsDiv.style.display = "block";
           } else {
@@ -104,9 +105,6 @@
           App.htmlElements.cartList.innerHTML = "";
           App.total = 0;
 
-          /* We have to enable the button to proceed with paypal checkout */
-          App.htmlElements.goToPaypal.removeAttribute("disabled");
-
           App.htmlElements.itemsDiv.style.display = "none";
 
           /* This will fetch us the product's id added to the cart */
@@ -121,10 +119,18 @@
             App.utils.loadItemsCart(item);
           });
           App.htmlElements.cartDiv.style.display = "block";
+
+          /** Validate if there are items in the cart, since paypal do not accept values less than $0 */
+          if (data.length !== 0) {
+            App.events.paypal();
+          }
         }
       },
       logout: () => {
         window.sessionStorage.removeItem("token");
+        /** We should remove the cart once the user is logged out */
+        App.utils.removeCart();
+
         App.htmlElements.itemsList.innerHTML = "";
         App.htmlElements.loginDiv.style.display = "flex";
         App.htmlElements.itemsDiv.style.display = "none";
@@ -133,14 +139,37 @@
         /* For security purposes, we are cleaning everything */
         App.htmlElements.cartList.innerHTML = "";
         App.total = 0;
-        App.htmlElements.goToPaypal.setAttribute("disabled", "true");
+        App.htmlElements.paypalButton.innerHTML = "";
+
+        /* We have to update the total also */
+        App.htmlElements.cartTotal.innerHTML = `Total: $${App.total}`;
 
         App.htmlElements.itemsDiv.style.display = "block";
         App.htmlElements.cartDiv.style.display = "none";
       },
-      checkout: (event) => {
-        event.preventDefault();
-        console.log("to paypal");
+      paypal: (event) => {
+        paypal
+          .Buttons({
+            createOrder: function (data, actions) {
+              return actions.order.create({
+                purchase_units: [
+                  {
+                    amount: {
+                      value: App.total,
+                    },
+                  },
+                ],
+              });
+            },
+            onApprove: function (data, actions) {
+              return actions.order.capture().then(function (details) {
+                alert(
+                  "Transaction completed by " + details.payer.name.given_name
+                );
+              });
+            },
+          })
+          .render("#paypal-button-container");
       },
     },
     utils: {
@@ -213,6 +242,14 @@
           /* We have to update the total also */
           App.htmlElements.cartTotal.innerHTML = `Total: $${App.total}`;
         }
+      },
+      removeCart: async () => {
+        await App.utils.fetch(
+          "http://localhost:4000/api/v1/cart/items/removeall/",
+          {
+            method: "DELETE",
+          }
+        );
       },
     },
   };
