@@ -273,7 +273,7 @@
         </div>`;
 
           /* We have to update the total also */
-          App.htmlElements.cartTotal.innerHTML = `Total: $${App.total}`;
+          App.htmlElements.cartTotal.innerHTML = `Total: $${Number(App.total).toFixed(2)}`;
         }
       },
       removeCart: async () => {
