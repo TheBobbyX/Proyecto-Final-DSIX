@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+@import 'animations.css';
 
 :root {
     --primary-color: rgb(142, 202, 230);
@@ -19,14 +20,14 @@ body {
     background-repeat: no-repeat;
     background-position-y: 15%;
     background-size: cover;
-    height:100vh
+    min-height:100vh;
 }
 
 .main-container {
     display:flex;
     align-items: center;
     justify-content: center;
-    height:100%;
+    min-height:100vh;
 }
 
 /* LOGIN */
@@ -38,6 +39,7 @@ body {
 }
 
 .login-left-side {
+    flex-grow:1;
     background-image: url(../img/loginBackground.svg);
     background-size:cover;
     background-repeat: no-repeat;
@@ -58,23 +60,44 @@ body {
 
 .title-container {
     font-size:30px;
+    animation-name: slideDown;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    position:relative;
 }
 
 .subtitle-container {
     margin-bottom: 60px;
     font-size:25px;
+    animation-name: slideDown;
+    animation-delay:0.5s;
+    animation-duration:1s;
+    animation-fill-mode: forwards;
+    position:relative;
+    opacity:0;
 }
 
 .group-container {
     font-size:20px;
     margin-bottom:20px;
+    animation-name: slideDown;
+    animation-delay:1s;
+    animation-duration:1s;
+    animation-fill-mode: forwards;
+    position:relative;
+    opacity:0;
 }
 
 .login-right-side {
     background-color:var(--background-color);
-    flex-grow:1;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+    width: 0;
+    animation-name: widthUp;
+    animation-delay:1.5s;
+    animation-duration:2s;
+    animation-fill-mode: forwards;
+
 }
 
 .login-right-side-container {
@@ -83,6 +106,12 @@ body {
     flex-direction: column;
     justify-content: center;
     height:100%;
+    opacity: 0;
+    animation-name: opacityUp;
+    animation-delay:1.7s;
+    animation-duration:1s;
+    animation-fill-mode: forwards;
+
 }
 
 .title-login {
@@ -98,6 +127,19 @@ body {
 .form-container label {
     font-size:20px;
     color: var(--secondary-color);
+}
+
+#labelEmail, #labelPass {
+    position:relative;
+    z-index:-1;
+    top:35px;
+    transition: 300ms all;
+}
+
+.input-container:focus-within #labelEmail,
+.input-container:focus-within #labelPass {
+    top: 0;
+    transition: 300ms all ease-in;
 }
 
 .input-container:nth-child(1) {

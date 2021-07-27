@@ -12,11 +12,16 @@
       cartDiv: document.querySelector(".cart-container"),
       itemsList: document.querySelector(".items-list"),
       cartList: document.querySelector(".cart-list"),
+
+      /* Animating DOM */
+      inputEmail: document.getElementById("inputEmail"),
+      inputPass: document.getElementById("inputPass"),
     },
     init: () => {
       App.bindEvents();
     },
     bindEvents: () => {
+      /** Functional Events */
       App.htmlElements.loginForm.addEventListener("submit", App.events.onLogin);
       App.htmlElements.itemsList.addEventListener(
         "click",
@@ -31,6 +36,24 @@
       App.htmlElements.paypalButton.addEventListener(
         "click",
         App.events.paypal
+      );
+
+      /** Animation events */
+      App.htmlElements.inputEmail.addEventListener(
+        "focusin",
+        App.events.onFocusInput
+      );
+      App.htmlElements.inputPass.addEventListener(
+        "focusin",
+        App.events.onFocusInput
+      );
+      App.htmlElements.inputEmail.addEventListener(
+        "blur",
+        App.events.outFocusInput
+      );
+      App.htmlElements.inputPass.addEventListener(
+        "blur",
+        App.events.outFocusInput
       );
     },
     initializeData: {
@@ -170,6 +193,16 @@
             },
           })
           .render("#paypal-button-container");
+      },
+      onFocusInput: (event) => {
+        event.target.placeholder = "";
+      },
+      outFocusInput: (event) => {
+        if (event.target.id === "inputEmail") {
+          event.target.placeholder = "Correo";
+        } else if (event.target.id === "inputPass") {
+          event.target.placeholder = "Contraseña";
+        }
       },
     },
     utils: {
