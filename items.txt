@@ -32,7 +32,7 @@
     "name": "Guitarra Eléctrica American Performer",
     "description": "Marca: Fender. Estilo: Telecaster. Color: Blanco Vintage. Configuración pastillas: S/S.",
     "id_image": "60fa4091b67148002640ed6b",
-    "price": 1.400
+    "price": 1400.00
 }
 {
     "name": "Guitarra Eléctrica Jared James Nichols",
