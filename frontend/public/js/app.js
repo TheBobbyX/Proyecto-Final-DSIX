@@ -3,11 +3,16 @@
     total: 0,
     htmlElements: {
       loginForm: document.getElementById("form-login"),
+      signupForm: document.getElementById("form-signup"),
+      signupButton: document.getElementById("signupButton"),
       cartTotal: document.getElementById("cartTotal"),
       logoutButton: document.getElementById("logout"),
       backButton: document.getElementById("back"),
       paypalButton: document.getElementById("paypal-button-container"),
+      backToLogin: document.getElementById("backToLogin"),
+
       loginDiv: document.querySelector(".login-container"),
+      signupDiv: document.querySelector(".sign-up-container"),
       itemsDiv: document.querySelector(".items-container"),
       cartDiv: document.querySelector(".cart-container"),
       itemsList: document.querySelector(".items-list"),
@@ -16,6 +21,11 @@
       /* Animating DOM */
       inputEmail: document.getElementById("inputEmail"),
       inputPass: document.getElementById("inputPass"),
+      inputSignUpEmail: document.getElementById("inputSignUpEmail"),
+      inputSignUpPassword: document.getElementById("inputSignUpPass"),
+      inputSignUpConfirmPassword: document.getElementById(
+        "inputSignUpConfirmPass"
+      ),
     },
     init: () => {
       App.bindEvents();
@@ -23,9 +33,25 @@
     bindEvents: () => {
       /** Functional Events */
       App.htmlElements.loginForm.addEventListener("submit", App.events.onLogin);
+      App.htmlElements.signupForm.addEventListener(
+        "submit",
+        App.events.onSignup
+      );
+      App.htmlElements.signupButton.addEventListener(
+        "click",
+        App.events.toSignUp
+      );
+      App.htmlElements.backToLogin.addEventListener(
+        "click",
+        App.events.toSignUp
+      );
       App.htmlElements.itemsList.addEventListener(
         "click",
         App.events.addToCart
+      );
+      App.htmlElements.cartList.addEventListener(
+        "click",
+        App.events.removeCart
       );
       App.htmlElements.logoutButton.addEventListener(
         "click",
@@ -47,11 +73,35 @@
         "focusin",
         App.events.onFocusInput
       );
+      App.htmlElements.inputSignUpEmail.addEventListener(
+        "focusin",
+        App.events.onFocusInput
+      );
+      App.htmlElements.inputSignUpPassword.addEventListener(
+        "focusin",
+        App.events.onFocusInput
+      );
+      App.htmlElements.inputSignUpConfirmPassword.addEventListener(
+        "focusin",
+        App.events.onFocusInput
+      );
       App.htmlElements.inputEmail.addEventListener(
         "blur",
         App.events.outFocusInput
       );
       App.htmlElements.inputPass.addEventListener(
+        "blur",
+        App.events.outFocusInput
+      );
+      App.htmlElements.inputSignUpEmail.addEventListener(
+        "blur",
+        App.events.outFocusInput
+      );
+      App.htmlElements.inputSignUpPassword.addEventListener(
+        "blur",
+        App.events.outFocusInput
+      );
+      App.htmlElements.inputSignUpConfirmPassword.addEventListener(
         "blur",
         App.events.outFocusInput
       );
@@ -75,6 +125,11 @@
         const { email, password } = event.target.elements;
         const emailValue = email.value;
         const passwordValue = password.value;
+        if (emailValue === "" || passwordValue === "") {
+          alert("Todos los campos son obligatorios");
+          return;
+        }
+
         if (emailValue != "") {
           const { auth, token } = await App.utils.fetch(
             "http://localhost:4000/api/v1/users/login/",
@@ -101,6 +156,65 @@
           }
         }
       },
+      onSignup: async (event) => {
+        event.preventDefault();
+        const { signupEmail, signupPassword, signupConfirmPassword } =
+          event.target.elements;
+        const emailValue = signupEmail.value;
+        const passValue = signupPassword.value;
+        const confirmPassValue = signupConfirmPassword.value;
+
+        if (emailValue === "" || passValue === "" || confirmPassValue === "") {
+          alert("Todos los campos son obligatorios");
+          return;
+        }
+        if (passValue !== confirmPassValue) {
+          alert("Las contraseñas no coinciden");
+          return;
+        }
+
+        const response = await App.utils.fetch(
+          "http://localhost:4000/api/v1/users/signup/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: emailValue,
+              password: passValue,
+            }),
+            redirect: "follow",
+          }
+        );
+        if (response.message !== undefined) {
+          if (response.message.includes("duplicate")) {
+            alert("Este correo ya ha sido registrado");
+            return;
+          }
+          if (response.message.includes("email is invalid")) {
+            alert("Correo inválido, intente otro correo");
+            return;
+          }
+          alert(
+            "No se pudo registrar el usuario, intenten dentro de unos minutos"
+          );
+          return;
+        } else {
+          alert("Usuario registrado con éxito");
+          App.htmlElements.loginDiv.style.display = "flex";
+          App.htmlElements.signupDiv.style.display = "none";
+        }
+      },
+      toSignUp: (event) => {
+        if (event.target.id === "signupButton") {
+          App.htmlElements.loginDiv.style.display = "none";
+          App.htmlElements.signupDiv.style.display = "block";
+        } else {
+          App.htmlElements.loginDiv.style.display = "flex";
+          App.htmlElements.signupDiv.style.display = "none";
+        }
+      },
       addToCart: async (event) => {
         event.preventDefault();
         if (event.target.id == "addCart") {
@@ -119,6 +233,32 @@
             }
           );
           alert("Item añadido al Carrito");
+        }
+      },
+      removeCart: async (event) => {
+        event.preventDefault();
+        if (event.target.id === "removeCart") {
+          const id = event.target.parentNode.parentNode.id;
+          const parent = event.target.parentNode.parentNode;
+          const price = event.target.getAttribute("data-price");
+
+          const response = await App.utils.fetch(
+            "http://localhost:4000/api/v1/cart/items/remove/" + id,
+            {
+              method: "DELETE",
+            }
+          );
+          if (response.message !== undefined) {
+            alert("No se pudo eliminar, intente nuevamente");
+          } else {
+            App.total -= price;
+            parent.remove();
+            App.htmlElements.cartTotal.innerHTML = `Total: $${Number(
+              App.total
+            ).toFixed(2)}`;
+            alert("El artículo se ha eliminado con éxito");
+            return;
+          }
         }
       },
       showCart: async (event) => {
@@ -198,10 +338,20 @@
         event.target.placeholder = "";
       },
       outFocusInput: (event) => {
-        if (event.target.id === "inputEmail") {
-          event.target.placeholder = "Correo";
-        } else if (event.target.id === "inputPass") {
-          event.target.placeholder = "Contraseña";
+        switch (event.target.id) {
+          case "inputEmail":
+          case "inputSignUpEmail":
+            event.target.placeholder = "Correo";
+            break;
+          case "inputPass":
+          case "inputSignUpPass":
+            event.target.placeholder = "Contraseña";
+            break;
+          case "inputSignUpConfirmPass":
+            event.target.placeholder = "Confirmar Contraseña";
+            break;
+          default:
+            event.target.placeholder = "";
         }
       },
     },
@@ -236,7 +386,7 @@
           </div>
         </div>`;
       },
-      loadItemsCart: async ({ item }) => {
+      loadItemsCart: async ({ item, _id }) => {
         const { data } = await App.utils.fetch(
           "http://localhost:4000/api/v1/item/" + item,
           {
@@ -254,7 +404,7 @@
 
           /* We display the product in html */
           App.htmlElements.cartList.innerHTML += `
-        <div class="cart-item" id=${data._id}>
+        <div class="cart-item" id=${_id}>
           <div class="item-image">
             <img src="/static/img/${data.id_image}.jpg" width=270 height=200 />
           </div>
@@ -270,10 +420,15 @@
               <p>Precio: $${data.price}</p>
             </div>
           </div>
+          <div class="product-actions">
+            <button type="button" id="removeCart" data-price="${data.price}">X</button>
+          </div
         </div>`;
 
           /* We have to update the total also */
-          App.htmlElements.cartTotal.innerHTML = `Total: $${Number(App.total).toFixed(2)}`;
+          App.htmlElements.cartTotal.innerHTML = `Total: $${Number(
+            App.total
+          ).toFixed(2)}`;
         }
       },
       removeCart: async () => {

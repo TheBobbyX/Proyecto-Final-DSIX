@@ -1,319 +1,336 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-@import 'animations.css';
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+@import "animations.css";
 
 :root {
-    --primary-color: rgb(142, 202, 230);
-    --secondary-color: rgb(2, 48, 71);
-    --background-color: rgba(201, 238, 255, 0.9);
-    --background-color-no-opacity: rgb(201, 238, 255);
+  --primary-color: rgb(142, 202, 230);
+  --secondary-color: rgb(2, 48, 71);
+  --background-color: rgba(201, 238, 255, 0.9);
+  --background-color-no-opacity: rgb(201, 238, 255);
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    font-family:"Poppins";
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins";
+  box-sizing: border-box;
 }
 
 body {
-    background-image: url(../img/background.svg);
-    background-repeat: no-repeat;
-    background-position-y: 15%;
-    background-size: cover;
-    min-height:100vh;
+  background-image: url(../img/background.svg);
+  background-repeat: no-repeat;
+  background-position-y: 15%;
+  background-size: cover;
+  min-height: 100vh;
 }
 
 .main-container {
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    min-height:100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 /* LOGIN */
 .login-container {
-    height:600px;
-    width:1000px;
-    display:flex;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  height: 600px;
+  width: 1000px;
+  display: flex;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .login-left-side {
-    flex-grow:1;
-    background-image: url(../img/loginBackground.svg);
-    background-size:cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+  flex-grow: 1;
+  background-image: url(../img/loginBackground.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 .login-left-side-container {
-    padding:50px;
-    text-align:right;
-    display:flex;
-    justify-content: space-between;
-    flex-direction: column;
-    height:100%;
-    color:white;
+  padding: 50px;
+  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100%;
+  color: white;
 }
 
 .title-container {
-    font-size:30px;
-    animation-name: slideDown;
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
-    position:relative;
+  font-size: 30px;
+  animation-name: slideDown;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  position: relative;
 }
 
 .subtitle-container {
-    margin-bottom: 60px;
-    font-size:25px;
-    animation-name: slideDown;
-    animation-delay:0.5s;
-    animation-duration:1s;
-    animation-fill-mode: forwards;
-    position:relative;
-    opacity:0;
+  margin-bottom: 60px;
+  font-size: 25px;
+  animation-name: slideDown;
+  animation-delay: 0.5s;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  position: relative;
+  opacity: 0;
 }
 
 .group-container {
-    font-size:20px;
-    margin-bottom:20px;
-    animation-name: slideDown;
-    animation-delay:1s;
-    animation-duration:1s;
-    animation-fill-mode: forwards;
-    position:relative;
-    opacity:0;
+  font-size: 20px;
+  margin-bottom: 20px;
+  animation-name: slideDown;
+  animation-delay: 1s;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  position: relative;
+  opacity: 0;
 }
 
 .login-right-side {
-    background-color:var(--background-color);
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    width: 0;
-    animation-name: widthUp;
-    animation-delay:1.5s;
-    animation-duration:2s;
-    animation-fill-mode: forwards;
-
+  background-color: var(--background-color);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  width: 0;
+  animation-name: widthUp;
+  animation-delay: 1.5s;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
 }
 
 .login-right-side-container {
-    padding:50px;
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    height:100%;
-    opacity: 0;
-    animation-name: opacityUp;
-    animation-delay:1.7s;
-    animation-duration:1s;
-    animation-fill-mode: forwards;
-
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  opacity: 0;
+  animation-name: opacityUp;
+  animation-delay: 1.7s;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
 }
 
 .title-login {
-    font-size:30px;
-    color: var(--secondary-color);
-    margin-bottom:10px;
+  font-size: 30px;
+  color: var(--secondary-color);
+  margin-bottom: 10px;
 }
 
 .form-container {
-    position:relative;
+  position: relative;
 }
 
 .form-container label {
-    font-size:20px;
-    color: var(--secondary-color);
+  font-size: 20px;
+  color: var(--secondary-color);
 }
 
-#labelEmail, #labelPass {
-    position:relative;
-    z-index:-1;
-    top:35px;
-    transition: 300ms all;
+.labelEmail,
+.labelPass {
+  position: relative;
+  z-index: -1;
+  top: 35px;
+  transition: 300ms all;
 }
 
-.input-container:focus-within #labelEmail,
-.input-container:focus-within #labelPass {
-    top: 0;
-    transition: 300ms all ease-in;
+.input-container:focus-within .labelEmail,
+.input-container:focus-within .labelPass {
+  top: 0;
+  transition: 300ms all ease-in;
 }
 
-.input-container:nth-child(1) {
-    margin-bottom: 20px;
+.input-container {
+  margin-bottom: 20px;
 }
 
 .input-container input {
-    border: none;
-    font-size: 20px;
-    width:100%;
-    margin-top:10px;
-    padding:5px;
+  border: none;
+  font-size: 20px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 5px;
 }
 
 .button-container {
-    margin-top:50px;
-    padding: 0 50px;
+  margin-top: 50px;
+  padding: 0 50px;
 }
 
 .button-container button {
-    width:100%;
-    border-radius: 0;
-    border: none;
-    font-size:20px;
-    color:white;
-    background-color: #006AA5;
-    padding: 5px 15px;
-    cursor:pointer;
+  width: 100%;
+  border-radius: 0;
+  border: none;
+  font-size: 20px;
+  color: white;
+  background-color: #006aa5;
+  padding: 5px 15px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+/* SIGN UP */
+.sign-up-container {
+  height: 600px;
+  width: 1000px;
+  display: none;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background: linear-gradient(#013654, #006aa5);
+}
+
+.sign-up-form {
+  z-index: 0;
+  width: 65%;
+  padding: 0 25px;
+  margin: auto;
+  margin-top: 50px;
 }
 
 /* OUR PRODUCTS */
 .items-container {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    display: none;    
-    height:600px;
-    width:1000px;
-    overflow-y:auto;
-    background: linear-gradient(#013654,#006AA5);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  display: none;
+  height: 600px;
+  width: 1000px;
+  overflow-y: auto;
+  background: linear-gradient(#013654, #006aa5);
 }
 
 header {
-    display:flex;
-    background-color: var(--background-color);
-    justify-content: space-between;
-    padding:10px;
-    font-size:20px;
-    text-align: center;
+  display: flex;
+  background-color: var(--background-color);
+  justify-content: space-between;
+  padding: 10px;
+  font-size: 20px;
+  text-align: center;
 }
 .items-list {
-    display:flex;
-    padding:20px;
-    justify-content: space-evenly;
-    flex-wrap:wrap;
+  display: flex;
+  padding: 20px;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
 .single-product {
-    width:275px;
-    text-align:center;
-    background-color:var(--background-color-no-opacity);
-    padding:10px;
-    margin:10px;
+  width: 275px;
+  text-align: center;
+  background-color: var(--background-color-no-opacity);
+  padding: 10px;
+  margin: 10px;
 }
 
 .product-title {
-    font-size:11px;
-    margin-bottom:10px;
+  font-size: 11px;
+  margin-bottom: 10px;
 }
 
 .product-image img {
-    width:100%;
-    height:170px;
+  width: 100%;
+  height: 170px;
 }
 
 .product-description {
-    font-size:16px;
-    color:var(--secondary-color);
-    font-weight: bold;
+  font-size: 16px;
+  color: var(--secondary-color);
+  font-weight: bold;
 }
 
 .product-description p span {
-    font-weight: normal;
+  font-weight: normal;
 }
 
 .product-actions {
-    margin-top:5px;
+  margin-top: 5px;
 }
 
 .product-actions button {
-    width:100%;
-    border: none;
-    background-color: var(--secondary-color);
-    color:white;
-    font-weight: bold;
-    padding: 5px;
-    cursor:pointer;
+  width: 100%;
+  border: none;
+  background-color: var(--secondary-color);
+  color: white;
+  font-weight: bold;
+  padding: 5px;
+  cursor: pointer;
 }
 
 .items-list div label {
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 
-#goToCart{
-    cursor: pointer;
-    margin-right:7px;
+#goToCart {
+  cursor: pointer;
+  margin-right: 7px;
 }
 
 #logout {
-    cursor:pointer;
+  cursor: pointer;
 }
 
 /* CART */
 
 .cart-container {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    height:600px;
-    width:1000px;
-    background: linear-gradient(#013654,#006AA5);
-    overflow:auto;
-    display: none;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  height: 600px;
+  width: 1000px;
+  background: linear-gradient(#013654, #006aa5);
+  overflow: auto;
+  display: none;
 }
 
 header img {
-    cursor:pointer;
+  cursor: pointer;
 }
 
 .empty-div {
-    width: 55px;
-    height: 60px;
+  width: 55px;
+  height: 60px;
 }
 
 .cart-section {
-    display:flex;
-    padding: 20px;
+  display: flex;
+  padding: 20px;
 }
 
-.cart-list{
-    flex-grow:1;
-    margin-right: 20px;
+.cart-list {
+  flex-grow: 1;
+  margin-right: 20px;
 }
 
 .cart-item {
-    background-color: var(--primary-color);
-    display:flex;
-    padding:10px;
-    text-align: center;
-    margin-bottom: 20px;
+  background-color: var(--primary-color);
+  display: flex;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .item-image {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 .item-description {
-    flex-grow:1;
+  flex-grow: 1;
 }
 
-.cart-total{
-    width:350px;
+.cart-total {
+  width: 350px;
 }
 
 .cart-total-container {
-    position:sticky;
-    top:25px;
+  position: sticky;
+  top: 25px;
 }
 
 .checkout {
-    width: 100%;
-    background-color:white;
-    padding:10px;
-    text-align: center;
-    margin-bottom:20px;
+  width: 100%;
+  background-color: white;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .buying-image {
-    text-align: center;
+  text-align: center;
 }

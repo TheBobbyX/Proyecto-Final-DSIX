@@ -26,17 +26,41 @@ html(lang="en")
                             h1 LOGIN          
                         form.form-container#form-login(action="")
                             .input-container
-                                label(for="email")#labelEmail Correo
+                                label(for="email").labelEmail Correo
                                 br
                                 input(type="text", name="email" placeholder="Correo")#inputEmail
                                 br
                             .input-container
-                                label(for="password")#labelPass Contraseña
+                                label(for="password").labelPass Contraseña
                                 br
                                 input(type="password", name="password" placeholder="Contraseña")#inputPass
                                 br
                             .button-container 
                                 button(type="submit") Ingresar
+                                button(type="button")#signupButton Registrarse
+            .sign-up-container 
+                header
+                    img(src="/static/img/back.svg", alt="back")#backToLogin 
+                    h1 REGISTRO
+                    .empty-div
+                form.form-container.sign-up-form#form-signup(action="")
+                    .input-container
+                        label(for="email" style="color:white").labelEmail Correo
+                        br
+                        input(type="text", name="signupEmail" placeholder="Correo")#inputSignUpEmail
+                        br
+                    .input-container
+                        label(for="password" style="color:white").labelPass Contraseña
+                        br
+                        input(type="password", name="signupPassword" placeholder="Contraseña")#inputSignUpPass
+                        br
+                    .input-container
+                        label(for="password" style="color:white").labelPass Confirmar Contraseña
+                        br
+                        input(type="password", name="signupConfirmPassword" placeholder="Contraseña")#inputSignUpConfirmPass
+                        br
+                    .button-container 
+                        button(type="submit") Registrarse
             .items-container
                 header 
                     img(src="/static/img/logout.svg", alt="logout")#logout.logout
